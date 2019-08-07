@@ -1,13 +1,11 @@
 var createError = require('http-errors');
 var express = require('express');
-var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 
 var app = express();
-
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -32,4 +30,12 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+
+app.listen(process.env.EXPRESS_PORT, (err) => {
+  if(err) {
+    console.log(err);
+    process.exit(1);
+  }
+  console.log(`server is running on port ${process.env.EXPRESS_PORT}`);
+})
 module.exports = app;
