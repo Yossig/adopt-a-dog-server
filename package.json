@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon -r ./node_modules/dotenv/config ./app.js",
-    "debug": "nodemon -r ./node_modules/dotenv/config --inspect ./app.js "
+    "start": "nodemon -r ./node_modules/dotenv/config ./src/app.js",
+    "debug": "nodemon -r ./node_modules/dotenv/config --inspect ./src/app.js "
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
