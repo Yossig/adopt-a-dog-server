@@ -5,8 +5,20 @@ class dogCtrl {
     try {
       res.send(await dogService.getAll())
     }
-    catch {
-      res.sendStatus(500);
+    catch (err) {
+      console.log(err)
+      res.sendStatus(500)
+    }
+  }
+
+  async filter(req, res) {
+    try {
+      const filter = req.body
+      res.send(await dogService.filter(filter))
+    }
+    catch (err) {
+      console.log(err)
+      res.sendStatus(500)
     }
   }
 }
