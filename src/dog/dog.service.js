@@ -13,6 +13,8 @@ class dogService {
       matchQuery.gender = {$in: filter.genders}
     }
 
+    matchQuery.age = {$gte:filter.minAge}
+
     aggregateQuery.push({$match: matchQuery})
 
     return dogModel.aggregate(aggregateQuery).exec()
