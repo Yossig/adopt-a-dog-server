@@ -21,10 +21,12 @@ class scrapeService {
         if (titles[i] === 'Image') {
           text = $(el).find('img').attr('src') || ''
         }
-        
+
         row[titles[i]] = text
       })
-      breedTable.push(row)
+      if (!(Object.entries(row).length === 0 && row.constructor === Object)) {
+        breedTable.push(row)
+      }
     })
 
     return breedTable;

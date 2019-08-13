@@ -5,8 +5,11 @@ var mongoose = require('mongoose');
 class scrapeCtrl {
   async scrapeAndInsertToDb() {
     try {
-      console.log('Dropping breeds collection')
-      await mongoose.connection.db.dropCollection('breeds')
+      const collection = await mongoose.connection.db.listCollections({ name: 'breeds' }).next()
+      if (collection) {
+        console.log('Dropping breeds collection')
+        await mongoose.connection.db.dropCollection('breeds')
+      }
       console.log('Scrpaing breeds data from wikipedia')
       const breedTable = await scrapeService.scrapeDogBreedsFromWikipedia()
       console.log('Saveign data to mongoDb')
@@ -17,7 +20,6 @@ class scrapeCtrl {
     } catch (err) {
       console.log(err)
     }
-
   }
 }
 
