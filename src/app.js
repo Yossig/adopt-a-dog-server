@@ -5,6 +5,7 @@ var indexRouter = require('./routes/index');
 var mongoose = require('mongoose');
 var app = express();
 var bodyParser = require('body-parser');
+var scrapeCtrl = require('./scarping/scrape.controller')
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -13,8 +14,9 @@ app.use(cookieParser());
 
 mongoose
   .connect(process.env.MONGODB_URL, { useNewUrlParser: true })
-  .then(() => {
+  .then(async () => {
     console.log('Mongo connection successful');
+    await scrapeCtrl.scrapeAndInsertToDb()
   })
   .catch((err) => {
     console.log(err);
