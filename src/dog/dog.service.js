@@ -13,6 +13,10 @@ class dogService {
       matchQuery.gender = {$in: filter.genders}
     }
 
+    if(filter.breeds && filter.breeds.length > 0) {
+      matchQuery.breed = {$in: filter.breeds}
+    }
+
     matchQuery.age = {$gte:filter.minAge}
 
     aggregateQuery.push({$match: matchQuery})
