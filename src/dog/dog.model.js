@@ -1,11 +1,14 @@
 var mongoose = require('mongoose');
-
+var User = require('../user/user.model')
 const DogSchema = new mongoose.Schema(
   {
     breed: String,
     name: String,
     gender: String,
-    age: Number
+    age: Number,
+    owner: {
+      type: mongoose.Types.ObjectId, ref: User
+    }
   }
 )
 
