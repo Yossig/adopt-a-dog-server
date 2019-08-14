@@ -16,7 +16,9 @@ mongoose
   .connect(process.env.MONGODB_URL, { useNewUrlParser: true })
   .then(async () => {
     console.log('Mongo connection successful');
-    await scrapeCtrl.scrapeAndInsertToDb()
+    if (process.env.SEED === 'true') {
+      await scrapeCtrl.scrapeAndInsertToDb()
+    }
   })
   .catch((err) => {
     console.log(err);
