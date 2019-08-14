@@ -2,7 +2,7 @@ var dogModel = require('./dog.model');
 
 class dogService {
   getAll() {
-    return dogModel.find({}).populate('owner').exec();
+    return dogModel.find({}).populate('owner').populate('breed').exec();
   }
 
   filter(filter) {
@@ -28,6 +28,15 @@ class dogService {
         as: 'owner'
       }
     })
+    aggregateQuery.push({
+      $lookup: {
+        from: 'breeds',
+        localField: 'breed',
+        foreignField: '_id',
+        as: 'breed'
+      }
+    })
+
 
     return dogModel.aggregate(aggregateQuery).exec()
   }
