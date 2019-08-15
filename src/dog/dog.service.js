@@ -37,8 +37,11 @@ class dogService {
       }
     })
 
-
     return dogModel.aggregate(aggregateQuery).exec()
+  }
+
+  delete(id) {
+    return dogModel.findByIdAndDelete(id).exec();
   }
 }
 

@@ -21,6 +21,16 @@ class dogCtrl {
       res.sendStatus(500)
     }
   }
+
+  async delete(req, res) {
+    try {
+      res.send(await dogService.delete(req.params.id))
+    }
+    catch (err) {
+      console.log(err);
+      res.sendStatus(500);
+    }
+  }
 }
 
 module.exports = new dogCtrl();
