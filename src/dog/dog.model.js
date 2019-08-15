@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var User = require('../user/user.model')
 var Breed = require('../breed/breed.model')
-
+var ws = require('../ws');
 const DogSchema = new mongoose.Schema(
   {
     breed: {
@@ -15,5 +15,9 @@ const DogSchema = new mongoose.Schema(
     }
   }
 )
+
+DogSchema.post('findOneAndRemove', doc => {
+  ws.broadcastDeletion(doc);
+})
 
 module.exports = mongoose.model('Dog', DogSchema)
