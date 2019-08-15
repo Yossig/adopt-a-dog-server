@@ -41,7 +41,7 @@ class dogService {
   }
 
   delete(id) {
-    return dogModel.findByIdAndDelete(id).exec();
+    return dogModel.findByIdAndDelete(id).populate('owner').populate('breed').exec();
   }
 }
 
