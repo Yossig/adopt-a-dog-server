@@ -11,6 +11,12 @@ class webSocket {
       client.send(JSON.stringify({ action: 'dogRemoved', data: doc }))
     })
   }
+
+  broadcastAddition(doc) {
+    this.wss.clients.forEach(client => {
+      client.send(JSON.stringify({ action: "dogAdded", data: doc }))
+    })
+  }
 }
 
 module.exports = new webSocket();

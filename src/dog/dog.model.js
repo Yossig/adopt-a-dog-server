@@ -10,6 +10,8 @@ const DogSchema = new mongoose.Schema(
     name: String,
     gender: String,
     age: Number,
+    profile_image: String,
+    description: String,
     owner: {
       type: mongoose.Types.ObjectId, ref: User
     }
@@ -18,6 +20,10 @@ const DogSchema = new mongoose.Schema(
 
 DogSchema.post('findOneAndRemove', doc => {
   ws.broadcastDeletion(doc);
+})
+
+DogSchema.post('save', async doc => {
+  ws.broadcastAddition(await doc.populate('owner').populate('breed').execPopulate());
 })
 
 module.exports = mongoose.model('Dog', DogSchema)

@@ -1,4 +1,5 @@
 var dogModel = require('./dog.model');
+var userModel = require('../user/user.model')
 
 class dogService {
   getAll() {
@@ -42,6 +43,11 @@ class dogService {
 
   delete(id) {
     return dogModel.findByIdAndRemove(id).populate('owner').populate('breed').exec();
+  }
+
+  add(dog) {
+    const newDog = new dogModel(dog);
+    return newDog.save();
   }
 }
 
