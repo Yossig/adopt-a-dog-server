@@ -1,5 +1,5 @@
 var dogModel = require('./dog.model');
-var userModel = require('../user/user.model')
+var mongoose = require('mongoose');
 
 class dogService {
   getAll() {
@@ -15,7 +15,7 @@ class dogService {
     }
 
     if (filter.breeds && filter.breeds.length > 0) {
-      matchQuery.breed = { $in: filter.breeds }
+      matchQuery.breed = { $in: filter.breeds.map(it => new mongoose.Types.ObjectId(it)) }
     }
 
     matchQuery.age = { $gte: filter.minAge }
