@@ -46,6 +46,18 @@ class dogCtrl {
       res.sendStatus(500);
     }
   }
+
+  async update(req, res) {
+    try {
+      const dog = req.body;
+      const updatedDog = await dogService.update(dog);
+      res.send(await updatedDog.populate('owner').populate('breed').execPopulate())
+    }
+    catch (err) {
+      console.log(err);
+      res.sendStatus(500);
+    }
+  }
 }
 
 module.exports = new dogCtrl();

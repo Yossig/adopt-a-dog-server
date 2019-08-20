@@ -49,6 +49,10 @@ class dogService {
     const newDog = new dogModel(dog);
     return newDog.save();
   }
+
+  update(dog) {
+    return dogModel.findByIdAndUpdate(dog._id, dog, { new: true }).exec();
+  }
 }
 
 module.exports = new dogService();

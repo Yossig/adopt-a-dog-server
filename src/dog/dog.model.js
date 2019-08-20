@@ -5,7 +5,7 @@ var ws = require('../ws');
 const DogSchema = new mongoose.Schema(
   {
     breed: {
-      type: mongoose.Types.ObjectId, ref:Breed
+      type: mongoose.Types.ObjectId, ref: Breed
     },
     name: String,
     gender: String,
@@ -19,11 +19,16 @@ const DogSchema = new mongoose.Schema(
 )
 
 DogSchema.post('findOneAndRemove', doc => {
-  ws.broadcastDeletion(doc);
+  ws.broadcastDelete(doc);
 })
 
 DogSchema.post('save', async doc => {
-  ws.broadcastAddition(await doc.populate('owner').populate('breed').execPopulate());
+  ws.broadcastAdd(await doc.populate('owner').populate('breed').execPopulate());
 })
+
+DogSchema.post('findOneAndUpdate', async doc => {
+  ws.broadcastUpdate(await doc.populate('owner').populate('breed').execPopulate());
+})
+
 
 module.exports = mongoose.model('Dog', DogSchema)

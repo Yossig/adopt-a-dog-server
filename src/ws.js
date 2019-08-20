@@ -6,15 +6,21 @@ class webSocket {
     console.log("ws server running on port 3001")
   }
 
-  broadcastDeletion(doc) {
+  broadcastDelete(doc) {
     this.wss.clients.forEach(client => {
       client.send(JSON.stringify({ action: 'dogRemoved', data: doc }))
     })
   }
 
-  broadcastAddition(doc) {
+  broadcastAdd(doc) {
     this.wss.clients.forEach(client => {
       client.send(JSON.stringify({ action: "dogAdded", data: doc }))
+    })
+  }
+
+  broadcastUpdate(doc) {
+    this.wss.clients.forEach(client => {
+      client.send(JSON.stringify({ action: "dogUpdated", data: doc }))
     })
   }
 }
