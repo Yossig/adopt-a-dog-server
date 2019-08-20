@@ -4,8 +4,8 @@ var dogCtrl = require('./dog.controller');
 const router = express.Router();
 
 router.get('/',dogCtrl.getAll);
-router.post('/',dogCtrl.filter);
 router.delete('/:id',dogCtrl.delete);
-router.post('/add',dogCtrl.add);
+router.post('/',dogCtrl.add);
+router.post('/filter',dogCtrl.filter);
 
 module.exports = router;
