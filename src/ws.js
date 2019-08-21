@@ -1,9 +1,21 @@
 const WebScoket = require('ws');
+const parser = require('ua-parser-js');
+const statisticsCtrl = require('./statistics/statistics.controller')
+
 class webSocket {
 
   constructor() {
     this.wss = new WebScoket.Server({ port: 3001 })
     console.log("ws server running on port 3001")
+
+    this.wss.on('connection', (ws, request) => {
+      let client = {
+        ip: request.connection.remoteAddress,
+        userAgent: parser(request.headers['user-agent'])
+      }
+
+      statisticsCtrl.setClient(client);
+    })
   }
 
   broadcastDelete(doc) {
