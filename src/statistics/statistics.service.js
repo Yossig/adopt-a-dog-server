@@ -1,22 +1,35 @@
-const cms = require('count-min-sketch'
-)
+const cms = require('count-min-sketch')
+const statisticsModel = require('./statistics.model')
+
 class statisticsService {
   constructor() {
-    this.lastClient = null;
     this.sketch = cms();
+    this.loadStatisticsData();
   }
 
-  setClient(client) {
+  async setClient(client) {
 
-    for(var prop in client) {
-      this.updateCMS(client[prop]);
+    for (var prop in client) {
+      this.sketch.update(client[prop], 1);
     }
 
     this.lastClient = client;
+    this.userCount++;
+
+    await statisticsModel.findOneAndUpdate({}, {
+      lastClient: this.lastClient,
+      userCount: this.userCount,
+      countMinSketch: this.sketch.toJSON()
+    }).exec()
   }
 
-  updateCMS(key) {
-    this.sketch.update(key, 1);
+  async loadStatisticsData() {
+    const statistics = await statisticsModel.findOne({}).exec();
+    this.lastClient = statistics.lastClient;
+    this.userCount = statistics.userCount;
+    if (statistics.countMinSketch !== null) {
+      this.sketch.fromJSON(statistics.countMinSketch);
+    }
   }
 
   queryCMS(key) {
