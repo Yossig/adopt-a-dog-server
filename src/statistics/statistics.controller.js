@@ -1,4 +1,5 @@
 const statisticsService = require('./statistics.service')
+const requestPromise = require('request-promise')
 
 class statisticsCtrl {
   getLastClient() {
@@ -13,26 +14,39 @@ class statisticsCtrl {
     statisticsService.queryCMS(key);
   }
 
-  setClient(rawClient) {
-    //todo: call ip to geolocation api
+  async setClient(rawClient) {
+    if (rawClient.ip === '::1') {
+      const currentIpApi = await requestPromise({
+        uri: 'https://api.ipify.org/?format=json',
+        json: true
+      })
+
+      rawClient.ip = currentIpApi.ip;
+    }
+
+    const ipApi = await requestPromise({
+      uri: `http://ip-api.com/json/${rawClient.ip}`,
+      json: true
+    })
+
     let deviceType;
-    switch(rawClient.userAgent.os.name) {
+    switch (rawClient.userAgent.os.name) {
       case 'Windows': {
         deviceType = 'PC'
       }
-      break;
+        break;
       case 'Android': {
         deviceType = 'mobile'
       }
-      break;
-      default: { 
+        break;
+      default: {
         deviceType = undefined
       }
     }
 
     let client = {
-      country: '',
-      city: '',
+      country: ipApi.country || 'unknown',
+      city: ipApi.city || 'unknown',
       browser: rawClient.userAgent.browser.name,
       os: rawClient.userAgent.os.name,
       type: rawClient.userAgent.device.type || deviceType
