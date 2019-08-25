@@ -27,7 +27,7 @@ class statisticsCtrl {
     res.send(statisticsService.queryCMS(key));
   }
 
-  async newClient(rawClient) {
+  async clientConnected(rawClient) {
     if (rawClient.ip === '::1') {
       const currentIpApi = await requestPromise({
         uri: 'https://api.ipify.org/?format=json',
@@ -65,8 +65,18 @@ class statisticsCtrl {
       type: rawClient.userAgent.device.type || deviceType
     }
 
-    await statisticsService.newClient(client);
+    await statisticsService.update(client);
+
   }
+  
+  clientDisconnected() {
+    statisticsService.clientDisconnected();
+  }
+
+  getNumberOfConnectedClients() {
+    return statisticsService.clients;
+  }
+
 }
 
 module.exports = new statisticsCtrl();

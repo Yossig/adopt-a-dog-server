@@ -4,6 +4,7 @@ const statisticsModel = require('./statistics.model')
 class statisticsService {
   constructor() {
     this.sketch = cms();
+    this.clients = 0;
 
     (async () => {
       const { countMinSketch } = await statisticsModel.findOne({}).select('countMinSketch').exec();
@@ -13,16 +14,21 @@ class statisticsService {
     })()
   }
 
-  newClient(client) {
+  update(client) {
     for (var prop in client) {
       this.sketch.update(client[prop], 1);
     }
 
-    statisticsModel.findOneAndUpdate({}, {
+    this.clients++;
+    return statisticsModel.findOneAndUpdate({}, {
       lastClient: client,
       $inc: { hitCount: 1 },
       countMinSketch: this.sketch.toJSON()
     }).exec()
+  }
+
+  clientDisconnected() {
+    this.clients--;
   }
 
   queryCMS(key) {
