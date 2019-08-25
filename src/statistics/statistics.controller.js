@@ -23,60 +23,27 @@ class statisticsCtrl {
 
   }
 
-  queryCMS(key) {
-    res.send(statisticsService.queryCMS(key));
-  }
-
-  async clientConnected(rawClient) {
-    if (rawClient.ip === '::1') {
-      const currentIpApi = await requestPromise({
-        uri: 'https://api.ipify.org/?format=json',
-        json: true
-      })
-
-      rawClient.ip = currentIpApi.ip;
+  queryCMS(req, res) {
+    try {
+      const key = req.body;
+      res.send(statisticsService.queryCMS(key));
     }
-
-    const ipApi = await requestPromise({
-      uri: `http://ip-api.com/json/${rawClient.ip}`,
-      json: true
-    })
-
-    let deviceType;
-    switch (rawClient.userAgent.os.name) {
-      case 'Windows': {
-        deviceType = 'PC'
-      }
-        break;
-      case 'Android': {
-        deviceType = 'mobile'
-      }
-        break;
-      default: {
-        deviceType = undefined
-      }
+    catch (err) {
+      console.error(err);
+      res.sendStatus(500);
     }
+  }
 
-    let client = {
-      country: ipApi.country || 'unknown',
-      city: ipApi.city || 'unknown',
-      browser: rawClient.userAgent.browser.name,
-      os: rawClient.userAgent.os.name,
-      type: rawClient.userAgent.device.type || deviceType
+  getNumberOfConnectedClients(req, res) {
+    try {
+      const numberOfConnectedClients = statisticsService.getNumberOfConnectedClients();
+      res.send({ numberOfConnectedClients })
     }
-
-    await statisticsService.update(client);
-
+    catch (err) {
+      console.log(err);
+      res.sendStatus(500);
+    }
   }
-  
-  clientDisconnected() {
-    statisticsService.clientDisconnected();
-  }
-
-  getNumberOfConnectedClients() {
-    return statisticsService.clients;
-  }
-
 }
 
 module.exports = new statisticsCtrl();
