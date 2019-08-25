@@ -2,16 +2,17 @@ const statisticsService = require('./statistics.service')
 const requestPromise = require('request-promise')
 
 class statisticsCtrl {
-  getLastClient() {
-    statisticsService.getLastClient();
+  getLastClient(req, res) {
+    res.send(statisticsService.getLastClient());
   }
 
-  update(key) {
-    statisticsService.updateCMS(key);
+  getHitCount(req, res) {
+    const hitCount = statisticsService.getHitCount();
+    res.send({ hitCount });
   }
 
-  query(key) {
-    statisticsService.queryCMS(key);
+  queryCMS(key) {
+    res.send(statisticsService.queryCMS(key));
   }
 
   async setClient(rawClient) {

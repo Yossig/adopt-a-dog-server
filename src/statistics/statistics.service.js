@@ -4,7 +4,7 @@ const statisticsModel = require('./statistics.model')
 class statisticsService {
   constructor() {
     this.sketch = cms();
-    this.loadStatisticsData();
+    this.loadStatisticsData(); //instead its  gonna be "loadSketch"
   }
 
   async setClient(client) {
@@ -14,11 +14,13 @@ class statisticsService {
     }
 
     this.lastClient = client;
-    this.userCount++;
+    this.hitCount++;
 
+    // this will be 2 different updates, one for hit count (use $inc) and last user connected collection
+    // one for sketch collection
     await statisticsModel.findOneAndUpdate({}, {
       lastClient: this.lastClient,
-      userCount: this.userCount,
+      hitCount: this.hitCount,
       countMinSketch: this.sketch.toJSON()
     }).exec()
   }
@@ -26,7 +28,7 @@ class statisticsService {
   async loadStatisticsData() {
     const statistics = await statisticsModel.findOne({}).exec();
     this.lastClient = statistics.lastClient;
-    this.userCount = statistics.userCount;
+    this.hitCount = statistics.hitCount;
     if (statistics.countMinSketch !== null) {
       this.sketch.fromJSON(statistics.countMinSketch);
     }
@@ -38,6 +40,10 @@ class statisticsService {
 
   getLastClient() {
     return this.lastClient;
+  }
+
+  getHitCount() {
+    return this.hitCount || 0
   }
 
 }

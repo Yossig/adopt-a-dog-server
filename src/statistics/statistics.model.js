@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const StatisticsSchema = new mongoose.Schema({
-  userCount: Number,
+  hitCount: Number,
   lastClient: Object,
   countMinSketch: Object
 })
