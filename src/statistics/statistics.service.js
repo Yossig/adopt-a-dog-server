@@ -4,34 +4,25 @@ const statisticsModel = require('./statistics.model')
 class statisticsService {
   constructor() {
     this.sketch = cms();
-    this.loadStatisticsData(); //instead its  gonna be "loadSketch"
+
+    (async () => {
+      const { countMinSketch } = await statisticsModel.findOne({}).select('countMinSketch').exec();
+      if (countMinSketch !== null) {
+        this.sketch.fromJSON(countMinSketch);
+      }
+    })()
   }
 
-  async setClient(client) {
-
+  newClient(client) {
     for (var prop in client) {
       this.sketch.update(client[prop], 1);
     }
 
-    this.lastClient = client;
-    this.hitCount++;
-
-    // this will be 2 different updates, one for hit count (use $inc) and last user connected collection
-    // one for sketch collection
-    await statisticsModel.findOneAndUpdate({}, {
-      lastClient: this.lastClient,
-      hitCount: this.hitCount,
+    statisticsModel.findOneAndUpdate({}, {
+      lastClient: client,
+      $inc: { hitCount: 1 },
       countMinSketch: this.sketch.toJSON()
     }).exec()
-  }
-
-  async loadStatisticsData() {
-    const statistics = await statisticsModel.findOne({}).exec();
-    this.lastClient = statistics.lastClient;
-    this.hitCount = statistics.hitCount;
-    if (statistics.countMinSketch !== null) {
-      this.sketch.fromJSON(statistics.countMinSketch);
-    }
   }
 
   queryCMS(key) {
@@ -39,11 +30,11 @@ class statisticsService {
   }
 
   getLastClient() {
-    return this.lastClient;
+    return statisticsModel.findOne({}).select('lastClient').exec();
   }
 
   getHitCount() {
-    return this.hitCount || 0
+    return statisticsModel.findOne({}).select('hitCount').exec();
   }
 
 }

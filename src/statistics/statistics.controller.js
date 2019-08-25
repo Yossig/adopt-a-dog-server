@@ -2,20 +2,32 @@ const statisticsService = require('./statistics.service')
 const requestPromise = require('request-promise')
 
 class statisticsCtrl {
-  getLastClient(req, res) {
-    res.send(statisticsService.getLastClient());
+  async getLastClient(req, res) {
+    try {
+      res.send(await statisticsService.getLastClient())
+    }
+    catch (error) {
+      console.error(err);
+      res.sendStatus(500);
+    }
   }
 
-  getHitCount(req, res) {
-    const hitCount = statisticsService.getHitCount();
-    res.send({ hitCount });
+  async getHitCount(req, res) {
+    try {
+      res.send(await statisticsService.getHitCount())
+    }
+    catch (error) {
+      console.error(err);
+      res.sendStatus(500);
+    }
+
   }
 
   queryCMS(key) {
     res.send(statisticsService.queryCMS(key));
   }
 
-  async setClient(rawClient) {
+  async newClient(rawClient) {
     if (rawClient.ip === '::1') {
       const currentIpApi = await requestPromise({
         uri: 'https://api.ipify.org/?format=json',
@@ -53,7 +65,7 @@ class statisticsCtrl {
       type: rawClient.userAgent.device.type || deviceType
     }
 
-    statisticsService.setClient(client);
+    await statisticsService.newClient(client);
   }
 }
 
