@@ -23,17 +23,6 @@ class statisticsCtrl {
 
   }
 
-  queryCMS(req, res) {
-    try {
-      const key = req.body;
-      res.send(statisticsService.queryCMS(key));
-    }
-    catch (err) {
-      console.error(err);
-      res.sendStatus(500);
-    }
-  }
-
   getNumberOfConnectedClients(req, res) {
     try {
       const numberOfConnectedClients = statisticsService.getNumberOfConnectedClients();

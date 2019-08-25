@@ -77,8 +77,19 @@ class statisticsService {
     return this.sketch.query(key);
   }
 
-  getLastClient() {
-    return statisticsModel.findOne({}).select('lastClient').exec();
+  async getLastClient() {
+
+    const {lastClient} =  await statisticsModel.findOne({}).select('lastClient').exec();
+    var clientWithQuery = {}
+
+    for(var prop in lastClient) {
+      clientWithQuery[prop]=  {
+        val: lastClient[prop],
+        frequency: this.queryCMS(lastClient[prop])
+      }
+    }
+
+    return clientWithQuery;
   }
 
   getHitCount() {
