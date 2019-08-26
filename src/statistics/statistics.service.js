@@ -79,14 +79,14 @@ class statisticsService {
 
   async getLastClient() {
 
-    const {lastClient} =  await statisticsModel.findOne({}).select('lastClient').exec();
-    var clientWithQuery = {}
+    const { lastClient } = await statisticsModel.findOne({}).select('lastClient').exec();
+    var clientWithQuery = []
 
-    for(var prop in lastClient) {
-      clientWithQuery[prop]=  {
-        val: lastClient[prop],
+    for (var prop in lastClient) {
+      clientWithQuery.push({
+        value: lastClient[prop],
         frequency: this.queryCMS(lastClient[prop])
-      }
+      })
     }
 
     return clientWithQuery;
