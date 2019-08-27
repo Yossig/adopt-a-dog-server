@@ -46,11 +46,11 @@ class statisticsService {
     }
 
     let client = {
-      country: ipApi.country || 'unknown',
-      city: ipApi.city || 'unknown',
-      browser: rawClient.userAgent.browser.name,
-      os: rawClient.userAgent.os.name,
-      type: rawClient.userAgent.device.type || deviceType
+      Country: ipApi.country || 'unknown',
+      City: ipApi.city || 'unknown',
+      Browser: rawClient.userAgent.browser.name,
+      OS: rawClient.userAgent.os.name,
+      Type: rawClient.userAgent.device.type || deviceType
     }
 
     for (var prop in client) {
@@ -84,6 +84,7 @@ class statisticsService {
 
     for (var prop in lastClient) {
       clientWithQuery.push({
+        field: prop,
         value: lastClient[prop],
         frequency: this.queryCMS(lastClient[prop])
       })
