@@ -33,6 +33,20 @@ class statisticsCtrl {
       res.sendStatus(500);
     }
   }
+
+  async getStatisticsData(req,res) {
+    try {
+      const lastClient = await statisticsService.getLastClient();
+      const numberOfConnectedClients = statisticsService.getNumberOfConnectedClients();
+      const {hitCount} = await statisticsService.getHitCount();
+
+      res.send({lastClient,numberOfConnectedClients,hitCount});
+    }
+    catch(err) {
+      console.log(err);
+      res.sendStatus(500);
+    }
+  }
 }
 
 module.exports = new statisticsCtrl();
