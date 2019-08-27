@@ -1,5 +1,4 @@
 const statisticsService = require('./statistics.service')
-const requestPromise = require('request-promise')
 
 class statisticsCtrl {
   async getLastClient(req, res) {
