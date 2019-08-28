@@ -39,11 +39,21 @@ class statisticsCtrl {
       const lastClient = await statisticsService.getLastClient();
       const numberOfConnectedClients = statisticsService.getNumberOfConnectedClients();
       const { hitCount } = await statisticsService.getHitCount();
-      const groupBy = {
-        gender: await dogService.groupBy('gender'),
-        breed: await dogService.groupBy('breed'),
-        age: await dogService.groupBy('age')
-      }
+      const groupBy = [
+        {
+          field: 'Gender',
+          data: await dogService.groupBy('gender')
+        },
+        {
+          field: 'Breed',
+          data: await dogService.groupBy('breed')
+        },
+        {
+          field: 'Age',
+          data: await dogService.groupBy('age')
+        }
+      ]
+
       res.send({ lastClient, numberOfConnectedClients, hitCount, groupBy });
     }
     catch (err) {
