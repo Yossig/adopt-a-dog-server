@@ -3,12 +3,14 @@ var mongoose = require('mongoose');
 
 class dogService {
   getAll() {
-    return dogModel.find({}).populate('owner').populate('breed').exec();
+    return dogModel.find({isAdopted:false}).populate('owner').populate('breed').exec();
   }
 
   filter(filter) {
     const aggregateQuery = [];
     const matchQuery = {};
+
+    matchQuery.isAdopted = false;
 
     if (filter.genders && filter.genders.length > 0) {
       matchQuery.gender = { $in: filter.genders }
@@ -56,6 +58,12 @@ class dogService {
 
   groupBy(field) {
     const aggregateQuery = [];
+    aggregateQuery.push({
+      $match: {
+        isAdopted:true
+      }
+    })
+
     aggregateQuery.push({
       $group: {
         _id: '$'+field,

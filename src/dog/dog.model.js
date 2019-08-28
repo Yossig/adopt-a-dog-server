@@ -10,6 +10,7 @@ const DogSchema = new mongoose.Schema(
     name: String,
     gender: String,
     age: Number,
+    isAdopted: Boolean,
     profile_image: String,
     description: String,
     owner: {
