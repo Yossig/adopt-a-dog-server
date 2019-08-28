@@ -53,6 +53,29 @@ class dogService {
   update(dog) {
     return dogModel.findByIdAndUpdate(dog._id, dog, { new: true }).exec();
   }
+
+  groupBy(field) {
+    const aggregateQuery = [];
+    aggregateQuery.push({
+      $group: {
+        _id: '$'+field,
+        count: { $sum: 1 }
+      }
+    })
+
+    if(field === "breed") {
+      aggregateQuery.push({
+        $lookup: {
+          from: 'breeds',
+          localField: '_id',
+          foreignField: '_id',
+          as: 'breed'
+        }
+      })
+    }
+    return dogModel.aggregate(aggregateQuery).exec();
+
+  }
 }
 
 module.exports = new dogService();

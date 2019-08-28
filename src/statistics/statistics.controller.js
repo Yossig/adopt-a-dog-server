@@ -1,4 +1,5 @@
 const statisticsService = require('./statistics.service')
+const dogService = require('../dog/dog.service')
 
 class statisticsCtrl {
   async getLastClient(req, res) {
@@ -33,15 +34,19 @@ class statisticsCtrl {
     }
   }
 
-  async getStatisticsData(req,res) {
+  async getStatisticsData(req, res) {
     try {
       const lastClient = await statisticsService.getLastClient();
       const numberOfConnectedClients = statisticsService.getNumberOfConnectedClients();
-      const {hitCount} = await statisticsService.getHitCount();
-
-      res.send({lastClient,numberOfConnectedClients,hitCount});
+      const { hitCount } = await statisticsService.getHitCount();
+      const groupBy = {
+        gender: await dogService.groupBy('gender'),
+        breed: await dogService.groupBy('breed'),
+        age: await dogService.groupBy('age')
+      }
+      res.send({ lastClient, numberOfConnectedClients, hitCount, groupBy });
     }
-    catch(err) {
+    catch (err) {
       console.log(err);
       res.sendStatus(500);
     }
