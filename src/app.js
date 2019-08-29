@@ -21,12 +21,14 @@ mongoose
       await scrapeCtrl.scrapeAndInsertToDb()
     }
     if (process.env.GENERATE === 'true') {
+      console.log('starting generate process...')
       await dataGeneratorService.clearData();
       console.log('data cleared')
-      await dataGeneratorService.generateUsers(2);
+      await dataGeneratorService.generateUsers(process.env.NUMBER_OF_USERS_TO_GENERATE);
       console.log('users generated')
-      await dataGeneratorService.generateDogs(50);
+      await dataGeneratorService.generateDogs(process.env.NUMBER_OF_DOGS_TO_GENERATE);
       console.log('dogs generated')
+      console.log('done generating!')
     }
   })
   .catch((err) => {
