@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 
 class dogService {
   getAll() {
-    return dogModel.find({isAdopted:false}).populate('owner').populate('breed').exec();
+    return dogModel.find({ isAdopted: false }).populate('owner').populate('breed').exec();
   }
 
   filter(filter) {
@@ -60,18 +60,25 @@ class dogService {
     const aggregateQuery = [];
     aggregateQuery.push({
       $match: {
-        isAdopted:true
+        isAdopted: true
       }
     })
+
+    aggregateQuery.push(
+      {
+        $group: {
+          _id: '$' + field,
+          count: { $sum: 1 }
+        }
+      })
 
     aggregateQuery.push({
-      $group: {
-        _id: '$'+field,
-        count: { $sum: 1 }
+      $sort: {
+        _id: 1
       }
     })
 
-    if(field === "breed") {
+    if (field === "breed") {
       aggregateQuery.push({
         $lookup: {
           from: 'breeds',
