@@ -1,12 +1,18 @@
 const userModel = require('../user/user.model');
 const dogModel = require('../dog/dog.model');
 const breedModel = require('../breed/breed.model');
+const statisticsModel = require('../statistics/statistics.model')
+const statisticsService = require('../statistics/statistics.service')
 const firstNames = require('./data-pool/names-first.json')
 const surnames = require('./data-pool/names-surnames.json')
 const maleDogNames = require('./data-pool/male-dog-names.json')
 const femaleDogNames = require('./data-pool/female-dog-names.json')
 const dogDescription = require('./data-pool/dog-description.json')
 const dogProfilePictures = require('./data-pool/dog-pictures-urls.json')
+const countries = require('./data-pool/countries.min.json')
+const browsers = require('./data-pool/browsers.json')
+const deviceTypes = require('./data-pool/device-types.json')
+const operationSystems = require('./data-pool/os.json')
 
 class dataGeneratorService {
   constructor() {
@@ -16,7 +22,7 @@ class dataGeneratorService {
     const promises = [];
     promises.push(dogModel.deleteMany({}).exec())
     promises.push(userModel.deleteMany({}).exec())
-
+    promises.push(statisticsModel.deleteMany({}).exec())
     return Promise.all(promises);
   }
 
@@ -39,7 +45,7 @@ class dataGeneratorService {
 
   async generateDogs(amount) {
     const userIds = await userModel.find({}).select('_id').exec();
-    const breedIds = await breedModel.find({Breed: {$in:Object.keys(dogProfilePictures)}}).select(['_id', 'Breed']).exec();
+    const breedIds = await breedModel.find({ Breed: { $in: Object.keys(dogProfilePictures) } }).select(['_id', 'Breed']).exec();
     const promises = [];
     for (let index = 0; index < amount; index++) {
       var gender = this.getRandomItemFromArray(['male', 'female']);
@@ -69,9 +75,42 @@ class dataGeneratorService {
     return promises;
   }
 
-  async generate() {
-    await this.generateOwners();
-    await this.generateDogs();
+  async generateEntries(amount) {
+    var statistics = new statisticsModel({
+      hitCount: 0,
+      lastClient: {},
+      countMinSketch: {}
+    })
+
+    await statistics.save()
+    const promises = []
+    for (let index = 0; index < amount; index++) {
+      var country = this.getRandomItemFromArray(Object.keys(countries))
+      var city = this.getRandomItemFromArray(countries[country])
+      var browser = this.getRandomItemFromArray(browsers)
+      var os = this.getRandomItemFromArray(operationSystems)
+      var type = this.getRandomItemFromArray(deviceTypes)
+
+      var client = {
+        Country: country,
+        City: city,
+        Browser: browser,
+        OS: os,
+        Type: type
+      }
+
+      for (var prop in client) {
+        statisticsService.updateCMS(client[prop])
+      }
+
+      promises.push(statisticsModel.findOneAndUpdate({}, {
+        lastClient: client,
+        $inc: { hitCount: 1 },
+        countMinSketch: statisticsService.sketch
+      }))
+    }
+
+    return Promise.all(promises)
   }
 
   getRandomItemFromArray(data) {

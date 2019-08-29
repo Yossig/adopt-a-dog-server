@@ -54,7 +54,7 @@ class statisticsService {
     }
 
     for (var prop in client) {
-      this.sketch.update(client[prop], 1);
+      this.updateCMS(client[prop])
     }
 
     this.clients++;
@@ -75,6 +75,10 @@ class statisticsService {
 
   queryCMS(key) {
     return this.sketch.query(key);
+  }
+
+  updateCMS(key) {
+    this.sketch.update(key, 1);
   }
 
   async getLastClient() {

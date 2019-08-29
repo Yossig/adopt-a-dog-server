@@ -28,6 +28,8 @@ mongoose
       console.log('users generated')
       await dataGeneratorService.generateDogs(process.env.NUMBER_OF_DOGS_TO_GENERATE);
       console.log('dogs generated')
+      await dataGeneratorService.generateEntries(process.env.NUMBER_OF_ENTRIES_TO_GENERATE)
+      console.log('entries generated')
       console.log('done generating!')
     }
   })
