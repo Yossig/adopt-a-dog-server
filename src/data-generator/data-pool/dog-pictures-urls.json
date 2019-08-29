@@ -1,1 +1,66 @@
-[]
+{
+  "Beagle": [
+    "https://d17fnq9dkz9hgj.cloudfront.net/breed-uploads/2018/08/beagle-detail.jpg?bust=1535565158&width=355",
+    "https://www.wibc.com/sites/g/files/exi441/f/styles/large_730/public/article-images-featured/beagle_istock_getty_ealisa.jpg?itok=6iSjJpD8",
+    "http://beaglehappy.com/wp-content/uploads/2012/09/beagle-running-out-the-door.jpg",
+    "https://spectator.imgix.net/content/uploads/2018/01/Notes-on-6.jpg?auto=compress,enhance,format&crop=faces,entropy,edges&fit=crop&w=820&h=550",
+    "https://upload.wikimedia.org/wikipedia/commons/9/95/Bronco_the_Beagle.JPG",
+    "https://www.thesprucepets.com/thmb/n0Q08UUEZ_r7u5P7LWRk1sADdsU=/450x0/filters:no_upscale():max_bytes(150000):strip_icc()/beagle-RolfKopfle-Photolibrary-Getty-135631212-56a26b1d3df78cf772756667.jpg"
+  ],
+  "Boxer": [
+    "https://upload.wikimedia.org/wikipedia/commons/6/6f/Male_fawn_Boxer_undocked.jpg",
+    "https://www.hillspet.com/content/dam/cp-sites/hills/hills-pet/en_us/img/breeds/boxer-dog-with-ball-in-mouth.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr0mCKtDRjxLZIxunHI9nIDDfwLmDx6MpQ6xLTpkYU_TGrNH1wOg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsmtG6EthJiwask78oKe2nyDws_9IBphKIPcPjHQovRqkZuIhn"
+  ],
+  "Bulldog": [
+    "https://upload.wikimedia.org/wikipedia/commons/1/11/Bulldog_adult_male.jpg",
+    "https://cdn.shopify.com/s/files/1/2253/9875/products/HTB1Ua4RXdHO8KJjSZFLq6yTqVXaf_300x.jpg?v=1527543055",
+    "https://ichef.bbci.co.uk/news/660/cpsprodpb/B22F/production/_90551654_gettyimages-511711526.jpg",
+    "https://res.cloudinary.com/fwkc-production/image/upload/c_fit,dpr_3.0,f_auto,g_center,h_430,q_auto,w_768/v1/fwkc/import/1016",
+    "https://i1.wp.com/www.simplypets.com/wp-content/uploads/2019/05/db.png?fit=2500%2C1874&ssl=1",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLs4ONddVAjgUHe6ujrkdgZAsYppGv_0IigVSnWDYQFeSAGhTE"
+  ],
+  "Dalmatian": [
+    "https://www.noozhawk.com/images/uploads/1179-020219-Dalmatian-Budweiser-Commercial-Courtesy-2.jpg",
+    "https://thehappypuppysite.com/wp-content/uploads/2019/01/Dalmatian-Temperament-long.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdScDh4TLyaq6HOyeSZE4VMwrkUGU93oncT6fZhbZJ6EKg0t5AbQ",
+    "https://www.skinnerspetfoods.co.uk/wp-content/uploads/2017/03/dalmatian.jpg"
+  ],
+  "Dobermann": [
+    "http://www.the-dobermann.com/images/steven1.jpg",
+    "https://www.mascotarios.org/wp-content/uploads/2012/03/dobermann.jpg",
+    "http://www.dobereich.com/images/562_IMG_6460-Loki_email.jpg",
+    "https://doglime.com/wp-content/uploads/2019/02/Dobermann-Sitting.jpg",
+    "https://i.etsystatic.com/11794254/r/il/40fd27/984495922/il_fullxfull.984495922_q628.jpg"    
+  ],
+  "Labrador Retriever": [
+    "https://upload.wikimedia.org/wikipedia/commons/2/26/YellowLabradorLooking_new.jpg",
+    "https://embarkvet.com/wp-content/uploads/2018/07/LabradorRetriever_dogdnatest.jpg",
+    "https://cdn.orvis.com/images/DBS_Lab_1280.jpg",
+    "https://static.independent.co.uk/s3fs-public/thumbnails/image/2018/10/22/09/chocolate-labrador.jpg?w968h681",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdiXPvHEXYlllKwhY1ATY7bKLS6cG6MKpOkOPeLa3gUU9QZvts0g"
+  ],
+  "Poodle": [
+    "https://www.loveyourdog.com/wp-content/uploads/2019/04/Toy-Poodle.jpg",
+    "https://www.pets4homes.co.uk/images/breeds/184/large/570938cd3f522dd437324ffd48c0be28.jpg",
+    "https://cdn2-www.dogtime.com/assets/uploads/gallery/poodle-dog-breed-pictures/elegence-1.jpg",
+    "https://www.labrottie.com/wp-content/uploads/2019/04/Rottiepoo-labrottie.com-.jpg",
+    "https://www.readersdigest.ca/wp-content/uploads/sites/14/2010/07/when-did-wild-poodles-roam-the-earth.gif"
+  ],
+  "Pug": [
+    "https://upload.wikimedia.org/wikipedia/commons/f/f0/Mops_oct09_cropped2.jpg",
+    "https://petfiester.com/wp-content/uploads/2018/10/p3.jpg",
+    "https://thehappypuppysite.com/wp-content/uploads/2019/04/How-Long-Do-Pugs-Live-long.jpg",
+    "http://cdn.shopify.com/s/files/1/0267/1841/products/canstockphoto12961496_1200x.jpg?v=1513162700",
+    "https://imgix.ranker.com/user_node_img/50026/1000504467/original/baby-with-his-toy-photo-u1?w=650&q=50&fm=pjpg&fit=crop&crop=faces",
+    "https://www.pets4homes.co.uk/images/articles/4229/large/pugs-and-eye-disorders-recognising-theres-a-problem-595b4a467850f.jpg"
+  ],
+  "Rottweiler": [
+   "https://cdn3.rottweilerhq.com/wp-content/uploads/2014/03/rottweiler-hq-misbehaving-800x450.jpg",
+   "https://vetstreet-brightspot.s3.amazonaws.com/a5/16f550a7fb11e0a0d50050568d634f/file/Rottweiler-2-645mk062811.jpg",
+   "https://s3.amazonaws.com/cdn-origin-etr.akc.org/wp-content/uploads/2017/11/12225014/Rottweiler-MP.jpg",
+   "https://www.puffandfluffspa.com/wp-content/uploads/2017/08/Depositphotos_1979239_m-2015-1000x675.jpg",
+   "https://cdn2-www.dogtime.com/assets/uploads/gallery/rottweiler-dogs-and-puppies/rottweiler-dogs-puppies-10.jpg" 
+  ]
+}

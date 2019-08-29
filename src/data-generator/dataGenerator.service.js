@@ -6,7 +6,7 @@ const surnames = require('./data-pool/names-surnames.json')
 const maleDogNames = require('./data-pool/male-dog-names.json')
 const femaleDogNames = require('./data-pool/female-dog-names.json')
 const dogDescription = require('./data-pool/dog-description.json')
-const requestPromise = require('request-promise')
+const dogProfilePictures = require('./data-pool/dog-pictures-urls.json')
 
 class dataGeneratorService {
   constructor() {
@@ -38,20 +38,17 @@ class dataGeneratorService {
   }
 
   async generateDogs(amount) {
-
     const userIds = await userModel.find({}).select('_id').exec();
-    const breedIds = await breedModel.find({}).select(['_id', 'Breed']).exec();
+    const breedIds = await breedModel.find({Breed: {$in:Object.keys(dogProfilePictures)}}).select(['_id', 'Breed']).exec();
     const promises = [];
-
     for (let index = 0; index < amount; index++) {
-      var geneder = this.getRandomItemFromArray(['male', 'female']);
+      var gender = this.getRandomItemFromArray(['male', 'female']);
       var name = gender === 'male' ? this.getRandomItemFromArray(maleDogNames) : this.getRandomItemFromArray(femaleDogNames);
       var age = Math.floor(Math.random() * 19);
       var isAdopted = this.getRandomItemFromArray(['false', 'true']);
       var description = this.getRandomItemFromArray(dogDescription);
       var breed = this.getRandomItemFromArray(breedIds);
-      var dogPhotoApi = await requestPromise(`https://dog.ceo/api/breed/${breed.Breed.toLowerCase().split(" ")[0]}/images`);
-      var profileImage = this.getRandomItemFromArray(dogPhotoApi.message);
+      var profileImage = this.getRandomItemFromArray(dogProfilePictures[breed.Breed])
       var owner = this.getRandomItemFromArray(userIds);
 
       var newDog = new dogModel({

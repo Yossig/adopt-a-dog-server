@@ -6,6 +6,7 @@ var mongoose = require('mongoose');
 var app = express();
 var bodyParser = require('body-parser');
 var scrapeCtrl = require('./scarping/scrape.controller')
+var dataGeneratorService = require('./data-generator/dataGenerator.service')
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -18,6 +19,14 @@ mongoose
     console.log('Mongo connection successful');
     if (process.env.SEED === 'true') {
       await scrapeCtrl.scrapeAndInsertToDb()
+    }
+    if (process.env.GENERATE === 'true') {
+      await dataGeneratorService.clearData();
+      console.log('data cleared')
+      await dataGeneratorService.generateUsers(2);
+      console.log('users generated')
+      await dataGeneratorService.generateDogs(50);
+      console.log('dogs generated')
     }
   })
   .catch((err) => {
