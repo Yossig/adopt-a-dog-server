@@ -58,6 +58,18 @@ class dogCtrl {
       res.sendStatus(500);
     }
   }
+
+  async adopted(req, res) {
+    try {
+      const dog = req.body;
+      dog.isAdopted = true;
+      res.send(await dogService.update(dog))
+    }
+    catch (err) {
+      console.log(err)
+      res.sendStatus(500);
+    }
+  }
 }
 
 module.exports = new dogCtrl();
