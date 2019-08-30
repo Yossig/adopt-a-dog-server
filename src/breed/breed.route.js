@@ -3,6 +3,7 @@ var breedCtrl = require('./breed.controller');
 
 const router = express.Router();
 
-router.get('/',breedCtrl.getAll);
+router.get('/', breedCtrl.getAll);
+router.post('/filter', breedCtrl.filter);
 
 module.exports = router;
