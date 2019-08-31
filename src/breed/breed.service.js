@@ -16,6 +16,20 @@ class breedService {
 
     return breedModel.find(query).exec();
   }
+
+  delete(id) {
+    return breedModel.findByIdAndRemove(id).exec();
+  }
+
+  add(breed) {
+    const newBreed = new breedModel(breed);
+    return newBreed.save();
+  }
+
+  update(breed) {
+    return breedModel.findByIdAndUpdate(breed._id, breed, { new: true }).exec();
+  }
+  
 }
 
 module.exports = new breedService()
