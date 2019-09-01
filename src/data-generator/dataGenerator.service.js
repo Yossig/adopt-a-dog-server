@@ -1,4 +1,5 @@
 const userModel = require('../user/user.model');
+const userService = require('../user/user.service');
 const dogModel = require('../dog/dog.model');
 const breedModel = require('../breed/breed.model');
 const statisticsModel = require('../statistics/statistics.model')
@@ -13,6 +14,7 @@ const countries = require('./data-pool/countries.min.json')
 const browsers = require('./data-pool/browsers.json')
 const deviceTypes = require('./data-pool/device-types.json')
 const operationSystems = require('./data-pool/os.json')
+const addresses = require('./data-pool/addresses.json')
 
 class dataGeneratorService {
   constructor() {
@@ -22,7 +24,7 @@ class dataGeneratorService {
     const promises = [];
     promises.push(dogModel.deleteMany({}).exec())
     promises.push(userModel.deleteMany({}).exec())
-    promises.push(statisticsModel.deleteMany({}).exec())
+    promises.push(statisticsModel.deleteOne({}).exec())
     return Promise.all(promises);
   }
 
@@ -32,12 +34,23 @@ class dataGeneratorService {
       var firstName = this.getRandomItemFromArray(firstNames.data);
       var surname = this.getRandomItemFromArray(surnames.data);
       var phoneNumber = this.getRandomItemFromArray(['050', '051', '052', '053', '054', '055', '058']) + (Math.floor(Math.random() * 9000000) + 1000000)
-      var newUser = new userModel({
+      var country = "Israel"
+      var city = this.getRandomItemFromArray(Object.keys(addresses))
+      var steert = this.getRandomItemFromArray(addresses[city])
+      var number = Math.floor(Math.random() * 30)
+
+      var newUser = {
         fullName: firstName + ' ' + surname,
         email: surname + '@gmail.com',
-        phoneNumber: phoneNumber
-      })
-      promises.push(newUser.save());
+        phoneNumber: phoneNumber,
+        address: {
+          country: country,
+          city: city,
+          street: steert,
+          number: number
+        }
+      }
+      promises.push(userService.add(newUser));
     }
 
     return Promise.all(promises);
@@ -76,6 +89,7 @@ class dataGeneratorService {
   }
 
   async generateEntries(amount) {
+    statisticsService.initSketch();
     var statistics = new statisticsModel({
       hitCount: 0,
       lastClient: {},

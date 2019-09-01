@@ -4,7 +4,8 @@ const requestPromise = require('request-promise')
 
 class statisticsService {
   constructor() {
-    this.sketch = cms();
+    this.initSketch();
+
     this.clients = 0;
 
     (async () => {
@@ -15,6 +16,9 @@ class statisticsService {
     })()
   }
 
+  initSketch() {
+    this.sketch = cms();
+  }
   async update(rawClient) {
     if (rawClient.ip === '::1') {
       const currentIpApi = await requestPromise({
