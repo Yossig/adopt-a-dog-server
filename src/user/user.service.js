@@ -14,6 +14,10 @@ class userService {
     const newUser = new userModel(user)
     return newUser.save();
   }
+
+  update(user) {
+    return userModel.findByIdAndUpdate(user._id, user, { new: true }).exec();
+  }
 }
 
 module.exports = new userService();

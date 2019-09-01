@@ -50,6 +50,7 @@ class dogCtrl {
   async update(req, res) {
     try {
       const dog = req.body;
+      dog.owner = await userService.update(dog.owner)
       const updatedDog = await dogService.update(dog);
       res.send(await updatedDog.populate('owner').populate('breed').execPopulate())
     }
