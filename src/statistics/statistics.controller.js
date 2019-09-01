@@ -51,6 +51,12 @@ class statisticsCtrl {
         {
           field: 'Age',
           data: await dogService.groupBy('age')
+        },
+        {
+          field: 'Avarage age by gender',
+          map: 'Gender',
+          reduce: 'Age',
+          data: (await dogService.mapReduceGenderAge()).results
         }
       ]
 

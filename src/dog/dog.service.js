@@ -91,6 +91,23 @@ class dogService {
     return dogModel.aggregate(aggregateQuery).exec();
 
   }
+
+  mapReduceGenderAge() {
+    var o = {};
+    o.map = function () {
+      emit(this.gender, this.age)
+    }
+
+    o.reduce = function (k, values) {
+      return values.reduce((a,b) => a+b) / values.length;
+    }
+
+    o.query = {
+      isAdopted: true
+    }
+
+    return dogModel.mapReduce(o)
+  }
 }
 
 module.exports = new dogService();
