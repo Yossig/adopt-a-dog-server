@@ -25,7 +25,8 @@ class breedService {
     if (filter.search) {
       let originResult = this.originsAho.search(filter.search);
       let breedResult = this.breedAho.search(filter.search);
-      matchQuery.$or = [{ Breed: { $in: breedResult.map(it => it[1][0]) } }, { Origin: { $in: originResult.map(it => it[1][0]) } }]
+
+      matchQuery.$or = [{ Breed: { $in: [].concat.apply([], breedResult.map(it => it[1])) } }, { Origin: { $in: [].concat.apply([], originResult.map(it => it[1])) } }]
     }
 
     aggregateQuery.push({ $match: matchQuery })
